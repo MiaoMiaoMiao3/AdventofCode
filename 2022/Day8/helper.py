@@ -1,7 +1,7 @@
 
 def part1(input):
-	topography, topography_transversed = parse_input(input)
-	result = find_visible_trees(topography, topography_transversed)
+	topography, topography_transposed = parse_input(input)
+	result = find_visible_trees(topography, topography_transposed)
 	return result
 
 # def part2(input):
@@ -12,23 +12,23 @@ def part1(input):
 
 def parse_input(input):
 	topography = []
-	topography_transversed = [[] for i in range(len(input[1]))]
+	topography_transposed = [[] for i in range(len(input[1]))]
 	for row in input:
 		parsed_elevation = list(map(int, list(row)))
 		topography.append(parsed_elevation)
 		elevation_index = 0
 		for elevation in parsed_elevation:
-			topography_transversed[elevation_index].append(elevation)
+			topography_transposed[elevation_index].append(elevation)
 			elevation_index += 1
-	return topography, topography_transversed
+	return topography, topography_transposed
 
-def find_visible_trees(topography, topography_transversed):
+def find_visible_trees(topography, topography_transposed):
 	visible_tree_counter = 0
 	for row_idx in range(1, len(topography) - 1):
 		for col_idx in range(1, len(topography[0]) - 1):
 			target_tree_height = topography[row_idx][col_idx]
 			target_tree_row = topography[row_idx][0:]
-			target_tree_col = topography_transversed[col_idx][0:]
+			target_tree_col = topography_transposed[col_idx][0:]
 			surrounding_tree_heights = find_surrounding_tree_heights(target_tree_row, target_tree_col, row_idx, col_idx)
 			if is_visible(surrounding_tree_heights, target_tree_height):
 				visible_tree_counter += 1
