@@ -9,6 +9,8 @@ def part1(input):
 	tail_positions = find_tail_positions(grid, head_series_motion)
 	grid = update_grid_markers(grid, tail_positions)
 	# result = count_positions_visited(grid)
+	for row in grid:
+		print(row)
 	return grid
 
 

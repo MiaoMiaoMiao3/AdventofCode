@@ -38,9 +38,11 @@ def update_tail_position(p1, p2):
 
 	return p2
 
-def update_grid_markers(grid, p1):
-	x_pos = p1[0]
-	y_pos = p1[1]
-	grid[x_pos][y_pos] = "#"
+def update_grid_markers(grid, tail_positions):
+	for pos in tail_positions:
+		x_pos = pos[0]
+		y_pos = pos[1]
+		print("POSITIONS", x_pos, y_pos)
+		grid[x_pos][y_pos] = "#"
 
 	return grid
