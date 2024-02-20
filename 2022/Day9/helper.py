@@ -1,13 +1,13 @@
 from setters import set_start_position, set_delta_position, set_grid
-from update import update_grid_markers, update_relative_position, \
-	update_bounds_and_position, update_tail_position
+from update import update_grid_markers, update_tail_position
 
 def part1(input):
 	series_motion = parse_input(input)
-	grid = build_grid(series_motion)
+	grid = build_grid()
+	print(len(grid), len(grid[0]))
 	find_head_tail_motions(grid, series_motion)
-	# result = count_positions_visited(grid)
-	return grid
+	result = count_positions_visited(grid)
+	return result
 
 
 # def part2(input):
@@ -23,13 +23,8 @@ def parse_input(input):
 
 	return series_motion
 
-def build_grid(series_motion):
+def build_grid():
 	grid_bounds = set_start_position()
-	relative_position = set_start_position()
-	for motion in series_motion:
-		direction, step_cnt = motion[0], motion[1]
-		relative_position = update_relative_position(relative_position, direction, step_cnt)
-		relative_position, grid_bounds = update_bounds_and_position(relative_position, grid_bounds)
 	grid = set_grid(grid_bounds)
 
 	return grid
@@ -37,17 +32,27 @@ def build_grid(series_motion):
 def find_head_tail_motions(grid, series_motion):
 	head_position = set_start_position()
 	tail_position = set_start_position()
+	i=0
 	for motion in series_motion:
+		i+=1
 		direction, step_cnt = motion[0], motion[1]
 		for step in range(0, step_cnt):
 			increment = 1
 			head_position = update_relative_position(head_position, direction, increment)
 			grid, tail_position = find_tail_position(grid, head_position, tail_position)
-			print(direction, step_cnt, step + 1, head_position, tail_position)
-
+			# print(i, direction, step_cnt, step + 1, head_position, tail_position)
 def find_tail_position(grid, head_position, tail_position):
 	delta_position = set_delta_position(head_position, tail_position)
 	tail_position = update_tail_position(head_position, tail_position, delta_position)
 	grid = update_grid_markers(grid, tail_position)
 
 	return grid, tail_position
+
+def count_positions_visited(grid):
+	visited_position_counter = 0
+	for row in grid:
+		for value in row:
+			if value == "#":
+				visited_position_counter += 1
+	
+	return visited_position_counter

@@ -4,12 +4,11 @@ def set_start_position():
 
 	return [0]*DIMENSIONS
 
-def set_grid(bounds):
+def set_grid():
+	# Make life easier -- set up grid to be a super large value instead of trying to set exact grid size
 	grid = []
-	x_max = bounds[0]
-	y_max = bounds[1]
-	for i in range(0, y_max + 1):
-		grid.append(["." for j in range(0, x_max + 1)])
+	for i in range(0, 500):
+		grid.append(["." for j in range(0, 500)])
 
 	return grid
 
