@@ -5,7 +5,6 @@ def set_start_position():
 	return [0]*DIMENSIONS
 
 def set_grid(bounds):
-	#TODO: would be nice to make this dynamically multi-dimensional
 	grid = []
 	x_max = bounds[0]
 	y_max = bounds[1]

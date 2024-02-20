@@ -47,10 +47,7 @@ def find_head_tail_motions(grid, series_motion):
 
 def find_tail_position(grid, head_position, tail_position):
 	delta_position = set_delta_position(head_position, tail_position)
-	# print("delta position", delta_position)
 	tail_position = update_tail_position(head_position, tail_position, delta_position)
-		# for row in grid:
-		# 	print(row)
 	grid = update_grid_markers(grid, tail_position)
 
 	return grid, tail_position

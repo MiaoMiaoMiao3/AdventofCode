@@ -29,23 +29,24 @@ def update_bounds_and_position(curr_relative_position, curr_bounds):
 	return new_relative_position, new_bounds
 
 def update_tail_position(p1, p2, delta_pos):
-	# if delta_axis > 1 then iterate through delta axis and add or subtract 1
-	# if delta_axis = 1 then if difference is greater than 1, add/subtract 1
-	unique_delta_pos_list = list(filter(lambda x: abs(x) > 0, delta_pos.values()))
-	unique_delta_pos_set = set(filter(lambda x: abs(x) > 0, delta_pos.values()))
-	print("UNIQUE", delta_pos.keys(), unique_delta_pos_list)
+	filtered_delta_pos = dict((k, v) for k, v in delta_pos.items() if abs(v) > 0)
+	step_change = 1
 	for idx, delta in delta_pos.items():
-			if (len(unique_delta_pos_list) > 1) and (2 in unique_delta_pos_set or -2 in unique_delta_pos_set):
-				if delta > 0:
-					p2[idx] += 1
-				elif delta < 0:
-					p2[idx] -= 1
-			elif len(unique_delta_pos_list) == 1:
-				if delta > 1:
-					p2[idx] += 1
-				elif delta < -1:
-					p2[idx] -=1
+			if (len(filtered_delta_pos) > 1) and \
+				(2 in filtered_delta_pos.values() or -2 in filtered_delta_pos.values()):
+				p2[idx] = update_position(p2[idx], step_change, delta, 0)
+			elif len(filtered_delta_pos) == 1:
+				p2[idx] = update_position(p2[idx], step_change, delta, 1)
+
 	return p2
+
+def update_position(pointer_value, step_change, delta, target_change):
+	if delta > target_change:
+		pointer_value += step_change
+	elif delta < -target_change:
+		pointer_value -= step_change
+
+	return pointer_value
 
 def update_grid_markers(grid, tail_position):
 	x_pos = tail_position[1]
