@@ -1,17 +1,18 @@
 from setters import set_start_position, set_delta_position, set_grid
-from update import update_grid_markers, update_tail_position
+from update import update_grid_markers, update_relative_position, update_tail_position
 
 def part1(input):
 	series_motion = parse_input(input)
 	grid = build_grid()
-	print(len(grid), len(grid[0]))
 	find_head_tail_motions(grid, series_motion)
 	result = count_positions_visited(grid)
 	return result
 
 
-# def part2(input):
-
+def part2(input):
+	series_motion = parse_input(input)
+	grid = build_grid()
+	
 # 	return result
 
 def parse_input(input):
@@ -24,8 +25,7 @@ def parse_input(input):
 	return series_motion
 
 def build_grid():
-	grid_bounds = set_start_position()
-	grid = set_grid(grid_bounds)
+	grid = set_grid()
 
 	return grid
 
@@ -40,7 +40,7 @@ def find_head_tail_motions(grid, series_motion):
 			increment = 1
 			head_position = update_relative_position(head_position, direction, increment)
 			grid, tail_position = find_tail_position(grid, head_position, tail_position)
-			# print(i, direction, step_cnt, step + 1, head_position, tail_position)
+
 def find_tail_position(grid, head_position, tail_position):
 	delta_position = set_delta_position(head_position, tail_position)
 	tail_position = update_tail_position(head_position, tail_position, delta_position)

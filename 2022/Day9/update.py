@@ -1,6 +1,20 @@
 from globals import DIMENSIONS
 
 # UPDATES
+def update_relative_position(relative_position, direction, step_cnt):
+	grid_mapper = { \
+		"R" : [0, step_cnt],
+		"L" : [0, -step_cnt],
+		"U" : [1, step_cnt],
+		"D" : [1, -step_cnt],
+	}
+	
+	axis_idx = grid_mapper[direction][0]
+	count = grid_mapper[direction][1]
+	relative_position[axis_idx] = relative_position[axis_idx] + count
+
+	return relative_position
+
 def update_tail_position(p1, p2, delta_pos):
 	filtered_delta_pos = dict((k, v) for k, v in delta_pos.items() if abs(v) > 0)
 	step_change = 1
