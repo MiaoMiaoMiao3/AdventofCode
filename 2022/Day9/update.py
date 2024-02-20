@@ -28,21 +28,28 @@ def update_bounds_and_position(curr_relative_position, curr_bounds):
 
 	return new_relative_position, new_bounds
 
-def update_tail_position(p1, p2):
-	for idx in range(0,DIMENSIONS):
-		position_difference = p1[idx] - p2[idx]
-		if position_difference > 0:
-			p2[idx] += 1
-		else:
-			p2[idx] -= 1
-
+def update_tail_position(p1, p2, delta_pos):
+	# if delta_axis > 1 then iterate through delta axis and add or subtract 1
+	# if delta_axis = 1 then if difference is greater than 1, add/subtract 1
+	unique_delta_pos_list = list(filter(lambda x: abs(x) > 0, delta_pos.values()))
+	unique_delta_pos_set = set(filter(lambda x: abs(x) > 0, delta_pos.values()))
+	print("UNIQUE", delta_pos.keys(), unique_delta_pos_list)
+	for idx, delta in delta_pos.items():
+			if (len(unique_delta_pos_list) > 1) and (2 in unique_delta_pos_set or -2 in unique_delta_pos_set):
+				if delta > 0:
+					p2[idx] += 1
+				elif delta < 0:
+					p2[idx] -= 1
+			elif len(unique_delta_pos_list) == 1:
+				if delta > 1:
+					p2[idx] += 1
+				elif delta < -1:
+					p2[idx] -=1
 	return p2
 
-def update_grid_markers(grid, tail_positions):
-	for pos in tail_positions:
-		x_pos = pos[0]
-		y_pos = pos[1]
-		print("POSITIONS", x_pos, y_pos)
-		grid[x_pos][y_pos] = "#"
+def update_grid_markers(grid, tail_position):
+	x_pos = tail_position[1]
+	y_pos = tail_position[0]
+	grid[x_pos][y_pos] = "#"
 
 	return grid

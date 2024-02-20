@@ -6,17 +6,17 @@ def set_start_position():
 
 def set_grid(bounds):
 	#TODO: would be nice to make this dynamically multi-dimensional
+	grid = []
 	x_max = bounds[0]
 	y_max = bounds[1]
-	grid = [["." for i in range(0, x_max)]]*y_max
+	for i in range(0, y_max + 1):
+		grid.append(["." for j in range(0, x_max + 1)])
 
 	return grid
 
 def set_delta_position(p1, p2):
-	aggr_p1 = 0
-	aggr_p2 = 0
+	delta_position = {}
 	for idx in range(0, DIMENSIONS):
-		aggr_p1 += p1[idx]
-		aggr_p2 += p2[idx]
+		delta_position[idx] = p1[idx] - p2[idx]
 
-	return abs(aggr_p1 - aggr_p2)
+	return delta_position
