@@ -32,21 +32,19 @@ def build_grid():
 def find_head_tail_motions(grid, series_motion):
 	head_position = set_start_position()
 	tail_position = set_start_position()
-	i=0
+	increment = 1
 	for motion in series_motion:
-		i+=1
 		direction, step_cnt = motion[0], motion[1]
-		for step in range(0, step_cnt):
-			increment = 1
+		for step_idx in range(0, step_cnt):
 			head_position = update_relative_position(head_position, direction, increment)
-			grid, tail_position = find_tail_position(grid, head_position, tail_position)
+			tail_position = find_tail_position(grid, head_position, tail_position)
+			grid = update_grid_markers(grid, tail_position)
 
 def find_tail_position(grid, head_position, tail_position):
 	delta_position = set_delta_position(head_position, tail_position)
 	tail_position = update_tail_position(head_position, tail_position, delta_position)
-	grid = update_grid_markers(grid, tail_position)
 
-	return grid, tail_position
+	return tail_position
 
 def count_positions_visited(grid):
 	visited_position_counter = 0
