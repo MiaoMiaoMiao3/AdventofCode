@@ -1,8 +1,16 @@
 from globals import DIMENSIONS
+from update import update_relative_position
 
-def set_start_position():
+def set_start_position(series_motion):
+	start_position = [0]*DIMENSIONS
+	for direction, step_cnt in series_motion:
+		start_position = update_relative_position(start_position, direction, step_cnt)
+		for idx, val in enumerate(start_position):
+			if val < 0:
+				start_position[idx] += abs(val)
 
-	return [0]*DIMENSIONS
+	print("START", start_position)
+	return start_position
 
 def set_grid():
 	# Make life easier -- set up grid to be a super large value instead of trying to set exact grid size
