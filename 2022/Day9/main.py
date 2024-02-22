@@ -13,6 +13,5 @@ if __name__=="__main__":
 	open("demo_input.txt", "r")
 	
 	parsed_data = read_input(input)
-	result = helper.part1(parsed_data)
-	# result = helper.part2(parsed_data)
+	result = helper.part1_2(parsed_data)
 	print(result)
