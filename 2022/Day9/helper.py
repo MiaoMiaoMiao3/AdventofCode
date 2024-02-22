@@ -31,10 +31,10 @@ def find_head_tail_motions(grid, series_motion, start_position):
 		direction, step_cnt = motion[0], motion[1]
 		for step_idx in range(0, step_cnt):
 			head_position = update_relative_position(head_position, direction, increment)
-			tail_position = find_tail_position(grid, head_position, tail_position)
+			tail_position = find_tail_position(head_position, tail_position)
 			grid = update_grid_markers(grid, tail_position)
 
-def find_tail_position(grid, head_position, tail_position):
+def find_tail_position(head_position, tail_position):
 	delta_position = set_delta_position(head_position, tail_position)
 	tail_position = update_tail_position(tail_position, delta_position)
 
