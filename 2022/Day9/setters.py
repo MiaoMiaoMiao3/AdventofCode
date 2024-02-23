@@ -9,7 +9,6 @@ def set_start_position(series_motion):
 			if val < 0:
 				start_position[idx] += abs(val)
 
-	print("START", start_position)
 	return start_position
 
 def set_grid():
