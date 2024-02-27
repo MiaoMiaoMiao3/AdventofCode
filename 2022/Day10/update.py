@@ -1,43 +1,44 @@
-from globals import DIMENSIONS
+import setters
 
 # UPDATES
-def update_relative_position(relative_position, direction, step_cnt):
-	grid_mapper = { \
-		"R" : [0, step_cnt],
-		"L" : [0, -step_cnt],
-		"U" : [1, step_cnt],
-		"D" : [1, -step_cnt],
+def update_signal_strength(instruction, register_tracker, signal_strength, target_cycle_count):
+	new_register_tracker = register_tracker
+	cycle_count_required = update_cycle_count(instruction[0])
+	for cycle_count in range(0, cycle_count_required):
+		new_register_tracker["cycle"] += 1
+		if cycle_count == (cycle_count_required - 1):
+			new_register_tracker["value"] = update_register_value(instruction, new_register_tracker["value"])
+		signal_strength, target_cycle_count = update_signal_strength(signal_strength, target_cycle_count)
+	return new_register_tracker
+
+def update_cycle_count(instruction):
+	cycle_count_mapper = { \
+		"noop" : 1,
+		"addx" : 2,
 	}
 	
-	axis_idx = grid_mapper[direction][0]
-	count = grid_mapper[direction][1]
-	relative_position[axis_idx] += count
+	cycle_count_required = cycle_count_mapper[instruction]
+	return cycle_count_required
 
-	return relative_position
+def update_register_value(instruction, register_value):
+	instruction_command = instruction[0]
+	if len(instruction) > 1: 
+		change_value = int(instruction[1])
+	else:
+		change_value = 0
 
-def update_tail_position(p2, delta_pos):
-	filtered_delta_pos = dict((k, v) for k, v in delta_pos.items() if abs(v) > 0)
-	step_change = 1
-	for idx, delta in delta_pos.items():
-			if (len(filtered_delta_pos) > 1) and \
-				(2 in filtered_delta_pos.values() or -2 in filtered_delta_pos.values()):
-				p2[idx] = update_position(p2[idx], step_change, delta, 0)
-			elif len(filtered_delta_pos) == 1:
-				p2[idx] = update_position(p2[idx], step_change, delta, 1)
+	if instruction_command == "noop":
+		return register_value
+	elif instruction_command == "addx":
+		register_value += change_value
 
-	return p2
+	return register_value
 
-def update_position(pointer_value, step_change, delta, target_change):
-	if delta > target_change:
-		pointer_value += step_change
-	elif delta < -target_change:
-		pointer_value -= step_change
+def update_signal_strength(register_tracker, signal_strength, target_cycle_count):
+	cycle_count = register_tracker["cycle"]
+	target_cycle_increment = setters.set_target_cycle_count()
+	if cycle_count == target_cycle_count:
+		signal_strength *= register_tracker["value"]
+	target_cycle_count += target_cycle_increment
 
-	return pointer_value
-
-def update_grid_markers(grid, tail_position):
-	x_pos = tail_position[1]
-	y_pos = tail_position[0]
-	grid[x_pos][y_pos] = "#"
-
-	return grid
+	return signal_strength, target_cycle_count

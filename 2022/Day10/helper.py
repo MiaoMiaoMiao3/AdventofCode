@@ -1,18 +1,17 @@
 import setters
-from update import update_grid_markers, update_relative_position, update_tail_position
+import update
 
 def part1(input):
-	register_value = setters.set_register_value()
-	signal_strength = find_signal_strength(input, register_value)
-	start_position = set_start_position(series_motion)
-	grid = build_grid()
-	no_of_knots = 1
-	find_head_tail_motions(grid, series_motion, start_position, no_of_knots)
-	result = count_positions_visited(grid)
+	register_tracker = setters.set_register_tracker()
+	result = find_signal_strength(input, register_tracker)
 	return result
 
-def find_signal_strength(input, register_value):
-	register_tracker = {}
+def find_signal_strength(input, register_tracker):
+	signal_strength = 1
+	target_cycle_count = 20
+	for cpu_instruction in input:
+		instruction = cpu_instruction.split(" ")
+		register_tracker, signal_strength = update.update_register( \
+			instruction, register_tracker, signal_strength, target_cycle_count)
 
-
-	return series_motion
+	return signal_strength
