@@ -4,5 +4,5 @@ def set_register_tracker():
 def set_signal_strength():
 	return 1
 
-def set_target_cycle_count():
-	return 20
+def set_target_cycle_increment():
+	return 40

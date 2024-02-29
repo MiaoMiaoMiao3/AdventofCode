@@ -11,7 +11,6 @@ def find_signal_strength(input, register_tracker):
 	target_cycle_count = 20
 	for cpu_instruction in input:
 		instruction = cpu_instruction.split(" ")
-		register_tracker, signal_strength = update.update_register( \
+		register_tracker, signal_strength, target_cycle_count = update.update_register( \
 			instruction, register_tracker, signal_strength, target_cycle_count)
-
 	return signal_strength
