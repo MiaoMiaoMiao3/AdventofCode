@@ -8,10 +8,12 @@ def set_target_cycle_increment():
 	return 40
 
 def set_sprite_position():
-	return '###.....................................'
+	default_sprite = ['#'] * 3
+	default_sprite += ['.'] * 36
+	return default_sprite
 
 def reset_sprites():
-	return '........................................'
+	return ['.'] * 39
 
 def set_crt():
-	return [['.' * 40] for i in range(0, 6)]
+	return [['.'] * 39 for i in range(0, 6)]

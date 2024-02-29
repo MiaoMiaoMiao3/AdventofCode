@@ -6,22 +6,25 @@ def update_register_part1(instruction, register_tracker, signal_strength, target
 	cycle_count_required = update_cycle_count(instruction[0])
 	for cycle_count in range(0, cycle_count_required):
 		new_register_tracker["cycle"] += 1
-		print(instruction, new_register_tracker)
 		signal_strength, target_cycle_count = update_signal_strength(new_register_tracker, signal_strength, target_cycle_count)
 		if cycle_count == (cycle_count_required - 1):
 			new_register_tracker["value"] = update_register_value(instruction, new_register_tracker["value"])
 	return new_register_tracker, signal_strength, target_cycle_count
 
-def update_register_part2(instruction, register_tracker, signal_strength, target_cycle_count):
+def update_register_part2(instruction, register_tracker, sprite):
 	new_register_tracker = register_tracker
 	cycle_count_required = update_cycle_count(instruction[0])
 	for cycle_count in range(0, cycle_count_required):
 		new_register_tracker["cycle"] += 1
-		print(instruction, new_register_tracker)
-		signal_strength, target_cycle_count = update_signal_strength(new_register_tracker, signal_strength, target_cycle_count)
+		print(new_register_tracker["cycle"], instruction, ''.join(sprite))
 		if cycle_count == (cycle_count_required - 1):
 			new_register_tracker["value"] = update_register_value(instruction, new_register_tracker["value"])
-	return new_register_tracker, signal_strength, target_cycle_count
+			sprite = setters.reset_sprites()
+			for sprite_idx in range(-1, 2):
+				register_value = new_register_tracker["value"]
+				sprite[register_value + sprite_idx] = "#"
+
+	return new_register_tracker, sprite
 
 def update_cycle_count(instruction):
 	cycle_count_mapper = { \
