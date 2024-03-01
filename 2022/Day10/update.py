@@ -16,12 +16,13 @@ def update_CRT_image(instruction, register_tracker, sprite, crt_image):
 	cycle_count_required = update_cycle_count(instruction[0])
 
 	for cycle_count in range(0, cycle_count_required):
-		new_register_tracker["cycle"] += 1
+
 		if new_register_tracker["cycle"] <= 240:
 			crt_image = update_CRT_pixel(crt_image, sprite, new_register_tracker["cycle"])
 			for row in crt_image:
 				print(''.join(row))
 			print(' ')
+		new_register_tracker["cycle"] += 1
 		if cycle_count == (cycle_count_required - 1):
 			new_register_tracker["value"] = update_register_value(instruction, new_register_tracker["value"])
 			sprite = update_sprites(new_register_tracker["value"])

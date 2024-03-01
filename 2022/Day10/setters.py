@@ -13,17 +13,17 @@ def set_sprite_position():
 	return default_sprite
 
 def reset_sprites():
-	return ['.'] * 41
+	return ['.'] * 40
 
 def set_crt_image():
-	return [['.'] * 41 for i in range(0, 6)]
+	return [['.'] * 40 for i in range(0, 6)]
 
 def set_crt_target_row(register_cycle):
-	if register_cycle == 0 or (register_cycle > 0 and register_cycle < 41):
+	if register_cycle == 0 or (register_cycle > 0 and register_cycle < 40):
 		return 0
-	elif register_cycle > 40 and register_cycle < 81:
+	elif register_cycle >= 40 and register_cycle < 80:
 		return 1
-	elif register_cycle > 80 and register_cycle < 121:
+	elif register_cycle > 80 and register_cycle < 120:
 		return 2
 	elif register_cycle > 120 and register_cycle < 161:
 		return 3
@@ -35,10 +35,9 @@ def set_crt_target_row(register_cycle):
 def set_crt_draw_position(register_cycle):
 	if register_cycle == 0 or (register_cycle > 0 and register_cycle < 40) :
 		return register_cycle
-	elif register_cycle >= 40 and register_cycle < 81:
+	elif register_cycle >= 40 and register_cycle < 80:
 		return register_cycle - 40
-	elif register_cycle >= 80 and register_cycle < 121:
-		print("I hit")
+	elif register_cycle >= 80 and register_cycle < 120:
 		return register_cycle - 80
 	elif register_cycle >= 120 and register_cycle < 161:
 		return register_cycle - 120
