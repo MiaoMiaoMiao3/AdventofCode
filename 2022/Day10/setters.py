@@ -38,10 +38,11 @@ def set_crt_draw_position(register_cycle):
 	elif register_cycle >= 40 and register_cycle < 80:
 		return register_cycle - 40
 	elif register_cycle >= 80 and register_cycle < 120:
+		print("I hit")
 		return register_cycle - 80
-	elif register_cycle >= 120 and register_cycle < 161:
+	elif register_cycle >= 120 and register_cycle < 160:
 		return register_cycle - 120
-	elif register_cycle >= 160 and register_cycle < 201:
+	elif register_cycle >= 160 and register_cycle < 200:
 		return register_cycle - 160
 	else:
 		return register_cycle - 200
