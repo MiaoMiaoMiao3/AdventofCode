@@ -19,9 +19,6 @@ def update_CRT_image(instruction, register_tracker, sprite, crt_image):
 
 		if new_register_tracker["cycle"] <= 240:
 			crt_image = update_CRT_pixel(crt_image, sprite, new_register_tracker["cycle"])
-			for row in crt_image:
-				print(''.join(row))
-			print(' ')
 		new_register_tracker["cycle"] += 1
 		if cycle_count == (cycle_count_required - 1):
 			new_register_tracker["value"] = update_register_value(instruction, new_register_tracker["value"])
@@ -40,9 +37,6 @@ def update_sprites(register_value):
 def update_CRT_pixel(crt_image, sprite, register_cycle):
 	crt_image_target_row = setters.set_crt_target_row(register_cycle)
 	crt_draw_position = setters.set_crt_draw_position(register_cycle)
-	# print('register cycle', register_cycle, crt_draw_position)
-	# print(sprite)
-	# print('ROW, col', crt_image_target_row, crt_draw_position)
 	crt_image[crt_image_target_row][crt_draw_position] = sprite[crt_draw_position]
 
 	return crt_image

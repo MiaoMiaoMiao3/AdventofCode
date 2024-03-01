@@ -10,8 +10,8 @@ def part1(input):
 def part2(input):
 	register_tracker = setters.set_register_tracker()
 	result = find_CRT_image(input, register_tracker)
-	# for row in result:
-	# 	print(''.join(row))
+	for row in result:
+		print(''.join(row))
 	return result
 
 def find_signal_strength(input, register_tracker):
