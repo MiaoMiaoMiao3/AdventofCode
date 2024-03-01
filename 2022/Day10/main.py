@@ -15,4 +15,4 @@ if __name__=="__main__":
 	parsed_data = read_input(input)
 	result = helper.part1(parsed_data)
 	result = helper.part2(parsed_data)
-	print(result)
+	# print(result)
