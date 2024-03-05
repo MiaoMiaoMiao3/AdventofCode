@@ -17,14 +17,17 @@ def part1(input):
 					monkeys[monkey.transfer_monkey_false].items.append(item)
 	print(find_monkey_business(monkeys))
 
+#Reference: https://chasingdings.com/2022/12/11/advent-of-code-day-11-monkey-in-the-middle/
 def part2(input):
 	number_of_rounds = 10000
 	monkeys = setters.batch_create_monkeys(input)
+	common_divisor = find_common_divisor(monkeys)
 	for round in range(number_of_rounds):
 		for monkey in monkeys:
 			while len(monkey.items):
 				item = monkey.items.pop(0)
 				item = calculate_inspection(monkey.inspection_input, item)
+				item = item % common_divisor
 				monkey.inspect_count += 1
 				transfer_to_true_monkey = transfer_test(monkey.test_input, item)
 				if transfer_to_true_monkey:
@@ -73,15 +76,21 @@ def transfer_test(input_text, item):
 	input_text = input_text.split(" ")
 	test_value = int(input_text[len(input_text) - 1])
 	if "divisible" in input_text:
-		if (item / test_value) == (item // test_value):
+		if (item % test_value) == 0:
 			return True
 
 	return False
 
 def find_monkey_business(monkeys):
 	all_monkey_business = setters.set_monkey_business(monkeys)
-	top_monkey_business = max(all_monkey_business)
-	all_monkey_business.remove(top_monkey_business)
-	top_monkey_business_2 = max(all_monkey_business)
+	all_monkey_business.sort(reverse=True)
 
-	return top_monkey_business * top_monkey_business_2
+	return all_monkey_business[0]*all_monkey_business[1]
+
+def find_common_divisor(monkeys):
+	common_divisor = 1
+	for monkey in monkeys:
+		input_text = monkey.test_input.split(" ")
+		common_divisor *= int(input_text[len(input_text) - 1])
+	
+	return common_divisor
